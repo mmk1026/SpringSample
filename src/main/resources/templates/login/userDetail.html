@@ -2,43 +2,32 @@
 <html xmlns:th="http://www.thymleaf.org">
 <head>
 	<meta charset="UTF-8"></meta>
-	
-	
-	<!-- Bootstrapの設定 -->
-	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
-	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
-	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
-	
 	<title>SignUp</title>
 </head>
 
 <body>
+	<div th:fragment="userDetail_contents">
+	<div class="row">
 	<div class="col-sm-5">
 		<div class="page-header">
-			<h1>ユーザー登録画面</h1>
+			<h1>ユーザー詳細</h1>
 		</div>
 		
 		<!-- フォーム開始 -->
-		<form method="post" action="/signup" th:object="${signupForm}">
+		<form method="post" th:action="@{/userDetail}" th:object="${signupForm}">
 		<table class="table table-bordered table-hover">
-		<!-- ユーザーIDの入力エリア -->
 			<tr>
-				<th class="active col-sm-3">ユーザーID</th>
-				<td>
-				<div class="form-group"
-					th:classappend="${#fields.hasErrors('userId')}?'has-error'">
+			<!-- ユーザーID（入力不可） -->
+				<th class="active col-sm-2">ユーザーID</th>
+				<td class="col-sm-3">
+				<div class="form-group">
 					<input type="text" class="form-control" 
-						th:field="*{userId}"/>
-						
-						<span class="text-danger"
-							th:if="${#fields.hasErrors('userId')}"
-							th:errors="*{userId}">
-							userId error
-						</span>
+						th:field="*{userId}"
+						readonly="readonly"/>
 				</div>
 				</td>
 			</tr>
-		<!-- パスワードの入力エリア -->
+		<!-- パスワード -->
 		<tr>
 			<th class="active">パスワード</th>
 			<td>
@@ -55,8 +44,8 @@
 				</div>
 			</td>
 		</tr>
-		<!-- ユーザー名の入力エリア -->
 		<tr>
+		<!-- ユーザー名 -->
 			<th class="active">ユーザー名</th>
 			<td>
 				<div class="form-group"
@@ -72,7 +61,7 @@
 				</div>
 			</td>
 		</tr>
-		<!-- 誕生日の入力エリア -->
+		<!-- 誕生日 -->
 		<tr>
 		<th class="active">誕生日</th>
 			<td>
@@ -90,7 +79,7 @@
 			</div>
 			</td>
 		</tr>
-		<!-- 年齢の入力エリア -->
+		<!-- 年齢 -->
 		<tr>
 			<th class="active">年齢</th>
 			<td>
@@ -105,44 +94,43 @@
 						age error
 					</span>
 				</div>
-				</td>
-			</tr>
-		<!-- 結婚ステータスの入力エリア -->
+			</td>
+		</tr>
+		<!-- 結婚 -->
 		<tr>
 			<th class="active">結婚</th>
 			<td>
 				<div class="form-group">
-				<!-- ラジオボタンの実装 -->
 					<div th:each="item:${radioMarriage}">
 					<input type="radio" name="radioMarrige"
-					th:text="${item.key}" 
-					th:value="${item.value}"
+					th:value="${item.value}" 
+					th:text="${item.key}"
 					th:field="*{marriage}"></input>
 				</div>
-				</div>
-				
 				<span class="text-danger"
 					th:if="${#fields.hasErrors('marriage')}"
 					th:errors="*{marriage}">
 					marriage error
 				</span>
+				</div>
 			</td>
 			</tr>
 		</table>
 		
-		<!-- エラーメッセージの一覧表示 -->
-		<ul>
-			<li th:each="error:${#fields.detailedErrors()}">
-				<span th:text="${error.message}">Error message</span>
-			</li>
-		</ul>
+		<!-- 更新ボタン -->
+		<button class="btn btn-primary btn-lg pull-right"
+			type="submit"
+			name="update">
+			更新
+		</button>
 		
-		<!-- ユーザー登録ボタン -->
-		<button class="btn btn-primary" type="submit">
-			ユーザー登録
+		<!-- 削除ボタン -->
+		<button class="btn btn-danger btn-lg" type="submit" name="delete">
+			削除
 		</button>
 		</form>
 	</div>
-	
+	</div>
+	</div>
 </body>
 </html>
